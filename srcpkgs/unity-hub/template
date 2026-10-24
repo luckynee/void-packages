@@ -1,0 +1,33 @@
+# Template file for 'unity-hub'
+pkgname=unity-hub
+version=3.19.3.1
+revision=1
+archs="x86_64"
+hostmakedepends=""
+makedepends=""
+depends="alsa-lib dbus-glib gtk+3 libnotify nss libXtst libatomic xdg-utils libXScrnSaver"
+short_desc="Hub for unity-editor"
+maintainer="luckynee <luckymahendra080503@gmail.com>"
+license="custom:Proprietary"
+homepage="https://unity.com/download"
+changelog="https://unity.com/unity-hub/release-notes"
+_realversion="${version%.*}-${version##*.}"
+distfiles="https://github.com/luckynee/unity-hub-builder/releases/download/${_realversion}/unityhub.tar.gz"
+checksum=c00cfb92aec91e5145f967a875dd35303c5c0d4ae9c1156ae2c5026641749025
+repository=nonfree
+restricted=yes
+noverifyrdeps=yes
+nopie=yes
+nostrip=yes
+
+do_install() {
+    vcopy usr /
+    vcopy opt /
+    vmkdir usr/bin
+    ln -sfr ${DESTDIR}/opt/unityhub/unityhub ${DESTDIR}/usr/bin/unityhub
+}
+
+post_install() {
+	vlicense $FILESDIR/LICENSE
+}
+
